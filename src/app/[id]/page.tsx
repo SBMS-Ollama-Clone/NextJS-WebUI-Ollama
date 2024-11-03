@@ -101,7 +101,7 @@ export default function Page ({ params }: { params: { id: string } }) {
         }
       })
     }
-  }, [])
+  }, [params.id, fetchSetting, setCurrentUser, setMessages, setTheme, router])
 
   const addMessage = (Message: any) => {
     messages.push(Message)

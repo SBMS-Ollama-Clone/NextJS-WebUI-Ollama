@@ -55,7 +55,7 @@ export function Sidebar ({ isCollapsed, isMobile, closeSidebar }: SidebarProps) 
 
   useEffect(() => {
     if (currentUser) fetchLocalChats(currentUser?.id)
-  }, [currentUser, setCurrentUser])
+  }, [currentUser, setCurrentUser, fetchLocalChats])
 
   const handleDeleteChat = (chatId: string) => {
     if (currentUser) {

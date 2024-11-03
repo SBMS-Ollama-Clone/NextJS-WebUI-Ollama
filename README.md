@@ -81,7 +81,13 @@ npm install
 npm run dev
 ```
 
-**5. Go to [localhost:3000](http://localhost:3000) and start chatting with your favourite model!**
+**or build and start using the docker-compose**
+
+```bash
+docker-compose build && docker-compose up
+```
+
+**7. Go to [localhost:3000](http://localhost:3000) and start chatting with your favourite model!**
 
 # Upcoming features
 

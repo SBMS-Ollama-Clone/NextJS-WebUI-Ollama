@@ -25,7 +25,7 @@ export function ModeToggle () {
       setTheme(setting.theme)
     }
     console.log(setting)
-  }, [setting])
+  }, [setting, setTheme])
 
   const handleThemeChanged = (theme: string) => {
     if (setting) {

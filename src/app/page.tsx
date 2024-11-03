@@ -204,7 +204,7 @@ export default function Home () {
         setOpen(true)
       }
     })
-  }, [])
+  }, [fetchSetting, setCurrentUser, setTheme])
 
   return (
     <main className='flex h-[calc(100dvh)] flex-col items-center'>
@@ -240,7 +240,7 @@ export default function Home () {
                   className='w-full mt-4'
                   onClick={() => setIsHavingAccount(false)}
                 >
-                  Don't have an account? Sign up
+                  Don&apos;t have an account? Sign up
                 </Button>
               </div>
             ) : (

@@ -3,7 +3,7 @@
 import { ACCESS_TOKEN, REFRESH_TOKEN } from '@/utils/constants'
 import localforage from 'localforage'
 import { useSearchParams, useRouter } from 'next/navigation'
-import { useEffect } from 'react'
+import { Suspense, useEffect } from 'react'
 import { toast } from 'sonner'
 
 export default function OAuth2RedirectHandler () {
@@ -34,6 +34,10 @@ export default function OAuth2RedirectHandler () {
           toast.error('Failed to store access token.')
         })
     }
-  }, [])
-  return <div>{error && <p>{error}</p>}</div>
+  }, [accessToken, refreshToken, error, router])
+  return (
+    <Suspense>
+      <div>{error && <p>{error}</p>}</div>
+    </Suspense>
+  )
 }

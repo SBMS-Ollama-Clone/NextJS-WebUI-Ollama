@@ -62,7 +62,7 @@ export default function ChatList({
           })
       );
     }
-  }, [isMobile]);
+  }, [isMobile, messages.length]);
 
   const onClickQuestion = (value: string, e: React.MouseEvent) => {
     e.preventDefault();

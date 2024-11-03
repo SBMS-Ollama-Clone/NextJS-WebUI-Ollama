@@ -1,0 +1,11 @@
+services:
+  nextjs: 
+    build: ./
+    image: kimleangsrd/webui-ollama-nextjs
+    container_name: nextjs
+  nginx: 
+    build: ./nginx
+    image: kimleangsrd/webui-ollama-nginx
+    container_name: nginx
+    ports:
+      - 3000:80
