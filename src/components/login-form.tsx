@@ -57,7 +57,7 @@ export default function LoginForm ({ setOpen }: LoginFormProps) {
                 .setItem(REFRESH_TOKEN, response.payload.refreshToken)
                 .then(() => {
                   getCurrentUser().then(response => {
-                    if (response.success) {
+                    if (response?.success) {
                       setCurrentUser(response.payload)
                     }
                   })
