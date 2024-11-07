@@ -53,7 +53,7 @@ export const createNewChat = async data => {
   })
 }
 
-export const renameChat = async (chatId, userId, data) => {
+export const renameChat = async (chatId, data) => {
   return localforage.getItem(ACCESS_TOKEN).then(async token => {
     const options = {
       method: 'PUT',
@@ -67,7 +67,7 @@ export const renameChat = async (chatId, userId, data) => {
     }
     try {
       const response = await fetch(
-        `${API_BASE_URL}/api/chats/${chatId}/rename/of-users/${userId}`,
+        `${API_BASE_URL}/api/chats/${chatId}/rename`,
         options
       )
       return response.json()
@@ -77,7 +77,7 @@ export const renameChat = async (chatId, userId, data) => {
   })
 }
 
-export const deleteChat = async (chatId, userId) => {
+export const deleteChat = async (chatId) => {
   return localforage.getItem(ACCESS_TOKEN).then(async token => {
     const options = {
       method: 'DELETE',
@@ -88,7 +88,7 @@ export const deleteChat = async (chatId, userId) => {
     }
     try {
       const response = await fetch(
-        `${API_BASE_URL}/api/chats/${chatId}/delete/of-users/${userId}`,
+        `${API_BASE_URL}/api/chats/${chatId}/delete`,
         options
       )
       return response.json()

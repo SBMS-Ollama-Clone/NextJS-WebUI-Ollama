@@ -74,9 +74,10 @@ export default function Page ({ params }: { params: { id: string } }) {
           })
           getAllContentsByChatId(params.id).then(response => {
             console.log(response)
-            if (response?.status == 'NOT_FOUND') {
+            if (!response?.success) {
               toast.warning(response.errors)
-            }
+              router.push('/')
+            } 
             if (response?.success) {
               setMessages(
                 response.payload?.map(

@@ -59,7 +59,7 @@ export function Sidebar ({ isCollapsed, isMobile, closeSidebar }: SidebarProps) 
 
   const handleDeleteChat = (chatId: string) => {
     if (currentUser) {
-      deleteChat(chatId, currentUser.id).then(response => {
+      deleteChat(chatId).then(response => {
         if (response.success) {
           setLocalChats(
             localChats.filter((chat: { chatId: string }) => {
@@ -72,6 +72,7 @@ export function Sidebar ({ isCollapsed, isMobile, closeSidebar }: SidebarProps) 
         }
       })
     }
+    deleteRef.current?.click()
   }
 
   const inputRenameRef = useRef<HTMLInputElement>(null)
@@ -189,7 +190,7 @@ export function Sidebar ({ isCollapsed, isMobile, closeSidebar }: SidebarProps) 
                                   variant='default'
                                   onClick={() => {
                                     if (currentUser) {
-                                      renameChat(chatId, currentUser.id, {
+                                      renameChat(chatId, {
                                         title: inputRenameRef.current?.value
                                       }).then(response => {
                                         if (response.success) {
