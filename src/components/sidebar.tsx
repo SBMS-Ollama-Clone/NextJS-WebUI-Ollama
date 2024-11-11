@@ -30,6 +30,7 @@ import {
 } from '@/app/api/chat'
 import useAuthStore from '@/app/hooks/useAuthStore'
 import useChatListStore from '@/app/hooks/useChatListStore'
+import { toast } from 'sonner'
 
 interface SidebarProps {
   isCollapsed: boolean
@@ -210,6 +211,9 @@ export function Sidebar ({ isCollapsed, isMobile, closeSidebar }: SidebarProps) 
                                               }
                                             )
                                           )
+                                        } else {
+                                          toast.error(response.errors)
+                                          renameRef.current?.click()
                                         }
                                       })
                                     }
