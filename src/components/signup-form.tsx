@@ -15,6 +15,11 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import React from 'react'
+import { getCurrentUser, login, signup } from '@/app/api/authentication'
+import { toast } from 'sonner'
+import localforage from 'localforage'
+import { ACCESS_TOKEN, REFRESH_TOKEN } from '@/utils/constants'
+import useAuthStore from '@/app/hooks/useAuthStore'
 
 const formSchema = z.object({
   username: z.string().min(2, {
@@ -32,7 +37,7 @@ interface SignUpFormProps {
   setOpen: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export default function SignUpForm ({ setOpen }: SignUpFormProps) {
+export default function SignUpForm({ setOpen }: SignUpFormProps) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -41,11 +46,46 @@ export default function SignUpForm ({ setOpen }: SignUpFormProps) {
       password: ''
     }
   })
-
-  function onSubmit (values: z.infer<typeof formSchema>) {
-    localStorage.setItem('ollama_user', values.username)
-    window.dispatchEvent(new Event('storage'))
-    setOpen(false)
+  const { setCurrentUser } = useAuthStore()
+  function onSubmit(values: z.infer<typeof formSchema>) {
+    signup(values.email, values.username, values.password).then((response) => {
+      if (response?.success) {
+        setOpen(false)
+        login(values.email, values.password)
+          .then(response => {
+            if (response.success) {
+              localforage
+                .setItem(ACCESS_TOKEN, response.payload.accessToken)
+                .then(() => {
+                  localforage
+                    .setItem(REFRESH_TOKEN, response.payload.refreshToken)
+                    .then(() => {
+                      getCurrentUser().then(response => {
+                        if (response?.success) {
+                          setCurrentUser(response.payload)
+                        }
+                      })
+                      toast.success('Logged in successfully.', {
+                        position: 'top-right'
+                      })
+                      setOpen(false)
+                    })
+                    .catch(error => {
+                      toast.error('Failed to store refresh token.')
+                    })
+                })
+                .catch(error => {
+                  toast.error('Failed to store access token.')
+                })
+            }
+          })
+          .catch(error => {
+            toast.error('An error occurred. Please try again. ' + response.errors)
+          })
+      } else {
+        toast.error('An error occurred. Please try again. ' + response.errors)
+      }
+    });
   }
 
   return (
